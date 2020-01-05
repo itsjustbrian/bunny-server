@@ -5,7 +5,7 @@
   "main": "capture.js",
   "scripts": {
     "build": "docker build -t bunny .",
-    "docker-run": "docker run --rm -e DISPLAY=:99 -e DISPLAY_WIDTH=1280 -e DISPLAY_HEIGHT=720 --name=bunny -p 8080:8080 -p 3000:3000 bunny",
+    "docker-run": "docker run --init --rm -e DISPLAY=:99 -e DISPLAY_WIDTH=1280 -e DISPLAY_HEIGHT=720 --name=bunny -p 8080:8080 -p 3000:3000 bunny",
     "start": "npm run build && npm run docker-run",
     "restart": "docker start -a bunny",
     "stop": "docker stop bunny -t 1",
