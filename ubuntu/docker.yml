@@ -1,0 +1,11 @@
+version: '1'
+services:
+  bunny:
+    image: bunny
+    ports:
+      - "8080:8080"
+      - "3000:3000"
+    environment:
+      DISPLAY: :99
+      DISPLAY_WIDTH: 1280
+      DISPLAY_HEIGHT: 720

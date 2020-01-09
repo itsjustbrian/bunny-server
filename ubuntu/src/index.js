@@ -89,27 +89,27 @@ const command = new FfmpegCommand()
     console.log('Processing finished !');
   });
 
-command.pipe().on('data', (chunk) => {
-  if (peer && peer.connected && streamInitialized) peer.send(chunk);
-  if (!mp4frag.initialization) mp4frag._parseChunk(chunk);
-});
+// command.pipe().on('data', (chunk) => {
+//   if (peer && peer.connected && streamInitialized) peer.send(chunk);
+//   if (!mp4frag.initialization) mp4frag._parseChunk(chunk);
+// });
 
 
 (io.listen(8080)).on('connect', (socket) => {
 
   console.log('connected');
 
-  if (peer) peer.close();
-  peer = new PeerConnection(SimplePeer, socket, { initiator: true, wrtc });
-  peer.ondata = (data) => { console.log('Got data: ' + data) };
-  peer.connect();
+  // if (peer) peer.close();
+  // peer = new PeerConnection(SimplePeer, socket, { initiator: true, wrtc });
+  // peer.ondata = (data) => { console.log('Got data: ' + data) };
+  // peer.connect();
 
-  socket.on('start-stream', async () => {
-    console.log('Initializing stream')
-    const initSegment = await getInitSegment();
-    peer.send(initSegment);
-    streamInitialized = true;
-  });
+  // socket.on('start-stream', async () => {
+  //   console.log('Initializing stream')
+  //   const initSegment = await getInitSegment();
+  //   peer.send(initSegment);
+  //   streamInitialized = true;
+  // });
 
   socket.on('stop-stream', () => streamInitialized = false);
 });

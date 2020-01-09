@@ -22,6 +22,7 @@ class PeerConnection {
 
   close() {
     console.log(`Destroying peer connection`);
+    console.log(this.peer);
     if (this.peer) this.peer.destroy();
   };
 
@@ -32,8 +33,11 @@ class PeerConnection {
   };
 
   _buildPeer() {
+    console.log('creating');
     const peer = new this.PeerConstructor(this.peerOptions);
     //peer._debug = console.log;
+
+    console.log('created');
 
     peer.on('error', (err) => {
       console.error(`WebRTC error`, err);

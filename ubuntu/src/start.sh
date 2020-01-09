@@ -16,8 +16,13 @@ pacmd set-default-source v1.monitor
 let CHROMIUM_WIDTH=DISPLAY_WIDTH+1
 let CHROMIUM_HEIGHT=DISPLAY_HEIGHT+1
 # Start chromium in a virtual display
-xvfb-run -server-num=$DISPLAY --server-args="-screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x24 -ac -nolisten tcp -dpi 96 +extension RANDR" chromium-browser --window-size=${CHROMIUM_WIDTH},${CHROMIUM_HEIGHT} --window-position=0,0 --disable-gpu --no-sandbox --disable-dev-shm-usage --enable-automation &
+
+# export $(dbus-launch)
+# export DBUS_SYSTEM_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS
+# xvfb-run -server-num=$DISPLAY --server-args="-screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x24 -ac -nolisten tcp -dpi 96 +extension RANDR" chromium-browser --window-size=${CHROMIUM_WIDTH},${CHROMIUM_HEIGHT} --window-position=0,0 --disable-gpu --disable-gpu-vsync --disable-accelerated-compositing --disable-software-rasterizer --disable-gpu-compositing --enable-automation &
+xvfb-run -server-num=$DISPLAY --server-args="-screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x24 -ac -nolisten tcp -dpi 96 +extension RANDR" /usr/bin/firefox --window-size=${CHROMIUM_WIDTH},${CHROMIUM_HEIGHT} --window-position=0,0 --disable-gpu &
 x11vnc -display WAIT$DISPLAY  -rfbport 3000 -nopw &
 # x11vnc -display WAIT:99  -rfbport 3000 -nopw &
 # ffmpeg -video_size 1280x720 -framerate 25 -f x11grab -i :99.0+0,0 -f pulse -ac 1 -i default -c:a libopus -strict -2 -b:a 96k output.mp4
+# valgrind --vgdb=yes --vgdb-error=0 node index.js
 node index.js

@@ -31,7 +31,7 @@ RUN \
   cd nasm-2.14.02 && \
   ./autogen.sh && \
   PATH="$HOME/bin:$PATH" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" && \
-  make && \
+  make -j4 && \
   make install
 
 # Yasm
@@ -41,7 +41,7 @@ RUN \
   tar xzvf yasm-1.3.0.tar.gz && \
   cd yasm-1.3.0 && \
   ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" && \
-  make && \
+  make -j4 && \
   make install
 
 # libx264
@@ -50,7 +50,7 @@ RUN \
   git -C x264 pull 2> /dev/null || git clone --depth 1 https://code.videolan.org/videolan/x264.git && \
   cd x264 && \
   PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure --prefix="$HOME/ffmpeg_build" --bindir="$HOME/bin" --enable-static --enable-pic && \
-  PATH="$HOME/bin:$PATH" make && \
+  PATH="$HOME/bin:$PATH" make -j4 && \
   make install
 
 # libopus
@@ -60,7 +60,7 @@ RUN \
   cd opus && \
   ./autogen.sh && \
   ./configure --prefix="$HOME/ffmpeg_build" --disable-shared && \
-  make && \
+  make -j4 && \
   make install
 
 # ffmpeg
@@ -83,6 +83,6 @@ RUN \
   --enable-libvorbis \
   --enable-libx264 \
   --enable-libpulse && \
-  PATH="$HOME/bin:$PATH" make && \
+  PATH="$HOME/bin:$PATH" make -j4 && \
   make install && \
   hash -r
