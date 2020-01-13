@@ -1,25 +1,23 @@
 FROM fafcrumb/ffmpeg-alpine:latest AS ffmpeg
 FROM alpine:edge
-# FROM node:12.14.0-alpine3.11
 
 # ffmpeg
 COPY --from=ffmpeg /usr/bin/ffmpeg /usr/local/bin
-# ffmpeg dependencies
-RUN apk add --no-cache sdl2 libass libva libvdpau
 
-# Firefox
-RUN apk add --no-cache \
-  firefox-esr \
-  ttf-freefont
+RUN echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
+  apk add --no-cache \
+  # ffmpeg dependencies
+  sdl2 libass libva libvdpau \
+  # Firefox
+  firefox@testing ttf-freefont \
+  # Node
+  nodejs npm \
+  # Virtual audio/display
+  pulseaudio pulseaudio-utils alsa-plugins-pulse xvfb xvfb-run x11vnc websockify@testing \
+  # Development
+  bash
 
-# Node
-RUN apk add --no-cache nodejs npm
-
-# Virtual audio/display
-RUN apk add --no-cache pulseaudio pulseaudio-utils alsa-plugins-pulse xvfb xvfb-run x11vnc
-
-# DEVELOPMENT
-RUN apk add --no-cache bash
+RUN apk add --no-cache fluxbox adwaita-icon-theme
 
 # MAIN
 
