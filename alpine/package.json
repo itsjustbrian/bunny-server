@@ -5,7 +5,7 @@
   "main": "capture.js",
   "scripts": {
     "build": "docker build -t bunny .",
-    "docker-run": "docker run --init --rm --shm-size=2gb --ipc=host --cap-add=SYS_ADMIN -e DISPLAY=:99 -e DISPLAY_WIDTH=1280 -e DISPLAY_HEIGHT=720 --name=bunny -p 8080:8080 -p 3000:3000 bunny",
+    "docker-run": "docker run --init --rm --shm-size=2gb --ipc=host --cap-add=SYS_ADMIN -e DISPLAY=:99 -e DISPLAY_WIDTH=1280 -e DISPLAY_HEIGHT=720 --name=bunny -p 8080:8080 -p 3000:3000 -p 8081:8081 bunny",
     "start": "npm run build && npm run docker-run",
     "restart": "docker start -a bunny",
     "stop": "docker stop bunny -t 1",
@@ -17,6 +17,8 @@
     "@types/node": "^12.12.11"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "fluent-ffmpeg": "^2.1.2",
     "mp4frag": "^0.2.0",
     "socket.io": "^2.3.0"

@@ -53,6 +53,16 @@ RUN \
   PATH="$HOME/bin:$PATH" make -j4 && \
   make install
 
+# libfdk-aac
+RUN \
+  cd ~/ffmpeg_sources && \
+  git -C fdk-aac pull 2> /dev/null || git clone --depth 1 https://github.com/mstorsjo/fdk-aac && \
+  cd fdk-aac && \
+  autoreconf -fiv && \
+  ./configure --prefix="$HOME/ffmpeg_build" --disable-shared && \
+  make -j4 && \
+  make install
+
 # libopus
 RUN \
   cd ~/ffmpeg_sources && \
@@ -77,9 +87,11 @@ RUN \
   --extra-libs="-lpthread -lm" \
   --bindir="$HOME/bin" \
   --enable-gpl \
+  --enable-nonfree \
   --enable-libass \
   --enable-libfreetype \
   --enable-libopus \
+  --enable-libfdk-aac \
   --enable-libvorbis \
   --enable-libx264 \
   --enable-libpulse && \

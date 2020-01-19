@@ -44,5 +44,8 @@ USER ${USERNAME}
 
 EXPOSE 8080
 EXPOSE 3000
+EXPOSE 8081
+
+COPY ./default.pa ${APP_LOCATION}
 
 CMD ["sh", "./start.sh"]
